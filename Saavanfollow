@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAAV4N FOLLOW — Creator Panel</title>
+<style>
+:root{--bg:#0b0a12;--panel:#151320;--panel2:#1d1a2b;--line:#302a42;--text:#f6f2ff;--muted:#aaa2bb;--purple:#8657ed;--pink:#e64f9a;--green:#5bd6a0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif}
+a{color:inherit}.layout{min-height:100vh;display:grid;grid-template-columns:245px 1fr}.side{background:#100e18;border-right:1px solid var(--line);padding:25px 17px;display:flex;flex-direction:column;gap:25px}.logo{font-weight:950;font-size:21px;letter-spacing:1px;padding:4px 9px}.logo span{color:#db75ff}.nav{display:grid;gap:8px}.nav a{padding:12px;border-radius:11px;color:var(--muted);text-decoration:none;font-size:14px}.nav a.active,.nav a:hover{background:#29203d;color:white}.side-note{margin-top:auto;color:#777087;font-size:11px;line-height:1.5;padding:8px}
+main{padding:26px;max-width:1250px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:25px}.top small{color:var(--muted)}.user{border:1px solid var(--line);background:var(--panel);border-radius:30px;padding:9px 13px;font-size:13px}
+h1{font-size:27px;margin:0 0 6px}h2{font-size:18px;margin:0 0 15px}.muted{color:var(--muted);font-size:13px;line-height:1.5}
+.hero{padding:25px;background:linear-gradient(115deg,#302052,#171426 70%);border:1px solid #493265;border-radius:18px;margin-bottom:17px;display:flex;justify-content:space-between;align-items:center;gap:15px}.hero h1{font-size:30px}.hero p{margin:6px 0 0;color:#d1c5e6}.hero-mark{font-size:42px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:17px}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}.stat small{color:var(--muted);font-size:11px;letter-spacing:.7px}.stat strong{display:block;font-size:27px;margin:8px 0 3px}.stat em{font-style:normal;color:var(--green);font-size:11px}
+.columns{display:grid;grid-template-columns:1.4fr 1fr;gap:15px}.service{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:14px 0;border-top:1px solid var(--line)}.service:first-of-type{border-top:0}.service b{font-size:14px}.service small{display:block;color:var(--muted);font-size:12px;margin-top:4px}.btn{border:0;border-radius:10px;padding:10px 14px;color:white;background:linear-gradient(100deg,var(--purple),var(--pink));font-weight:750;cursor:pointer}.btn.secondary{background:#29243a;border:1px solid #443956}.btn:disabled{opacity:.5;cursor:not-allowed}
+input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#0f0d17;color:white;font-size:14px;margin:6px 0 13px}label{font-size:12px;color:#c9c1d6}.auth-wrap{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(ellipse at top,#302047,#0b0a12 60%)}.auth{width:min(420px,100%);background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:27px;box-shadow:0 20px 80px #0008}.auth .logo{text-align:center;font-size:25px;margin-bottom:17px}.auth h1{text-align:center}.auth p{text-align:center}.auth .btn{width:100%;padding:13px}.switch{text-align:center;font-size:12px;color:var(--muted);margin-top:16px}.switch a{color:#d1a7ff;cursor:pointer}.error{color:#ff8baf;font-size:12px;min-height:18px}.pill{display:inline-block;border-radius:30px;background:#2b2140;color:#d9c4ff;padding:5px 9px;font-size:10px}.hidden{display:none!important}.notice{margin-top:16px;border:1px solid #59462b;background:#211b13;color:#e9d4aa;padding:12px;border-radius:12px;font-size:11px;line-height:1.5}.foot{color:#777087;text-align:center;font-size:11px;margin:22px 0}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.side{padding:14px 16px;border-right:0;border-bottom:1px solid var(--line);gap:12px}.nav{display:flex;overflow:auto}.nav a{white-space:nowrap}.side-note{display:none}main{padding:18px}.cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.columns{grid-template-columns:1fr}.hero-mark{display:none}.hero h1{font-size:25px}.top{align-items:flex-start}.user{font-size:11px}}
+</style></head>
+<body>
+<section id="authView" class="auth-wrap">
+ <div class="auth">
+  <div class="logo">SAAV4N <span style="color:#db75ff">FOLLOW</span></div>
+  <div id="loginForm">
+   <h1>Welcome back</h1><p class="muted">Sign in to your creator panel. After login, your home dashboard opens here.</p>
+   <label>Username</label><input id="loginUser" autocomplete="username" placeholder="Enter your username">
+   <label>Password</label><input id="loginPass" type="password" autocomplete="current-password" placeholder="Enter your password">
+   <div class="error" id="loginError"></div><button class="btn" onclick="login()">Login</button>
+   <div class="switch">New here? <a onclick="showRegister()">Create an account</a></div>
+  </div>
+  <div id="registerForm" class="hidden">
+   <h1>Create account</h1><p class="muted">Choose a username and a password</p>
+   <label>Username</label><input id="regUser" autocomplete="username" placeholder="3–20 letters or numbers">
+   <label>Password</label><input id="regPass" type="password" autocomplete="new-password" placeholder="At least 8 characters">
+   <label>Confirm password</label><input id="regConfirm" type="password" autocomplete="new-password" placeholder="Re-enter password">
+   <div class="error" id="regError"></div><button class="btn" onclick="register()">Create account</button>
+   <div class="switch">Already registered? <a onclick="showLogin()">Log in</a></div>
+  </div>
+  <div class="notice">Use a password made for this demo only. Never enter your Instagram password, recovery code, or one-time verification code here.</div>
+ </div>
+</section>
+
+<div id="appView" class="layout hidden">
+ <aside class="side"><div class="logo">SAAV4N <span>FOLLOW</span></div>
+  <nav class="nav"><a class="active" href="#dashboard">▦ Dashboard</a><a href="#services">◎ Growth tasks</a><a href="#rewards">✦ Rewards</a><a href="#referrals">♧ Referrals</a><a href="#leaderboard">♜ Leaderboard</a><a href="#admin">⚙ Admin preview</a></nav>
+  <div class="side-note">Independent creator community. Not affiliated with Instagram or Meta.</div>
+ </aside>
+ <main>
+  <div class="top"><div><h1>Dashboard</h1><small>Manage your creator-growth activities</small></div><div class="user">● <span id="navUser"></span> <button onclick="logout()" style="margin-left:8px;background:none;border:0;color:#d3aaff;cursor:pointer">Log out</button></div></div>
+  <section class="hero"><div><span class="pill">CREATOR PANEL</span><h1>Welcome, <span id="helloUser"></span> 👋</h1><p>Build your community with genuine creator activities.</p></div><div class="hero-mark">✦</div></section>
+  <div class="cards">
+   <div class="card stat"><small>POINTS BALANCE</small><strong id="points">0</strong><em>Demo reward points</em></div>
+   <div class="card stat"><small>COMPLETED TASKS</small><strong id="done">0</strong><em>Keep learning</em></div>
+   <div class="card stat"><small>REFERRAL CODE</small><strong id="refCode" style="font-size:19px">—</strong><em>Invite friends</em></div>
+   <div class="card stat"><small>ACCOUNT STATUS</small><strong style="font-size:20px">Active</strong><em>Demo account</em></div>
+  </div>
+  <div class="columns">
+   <section class="card" id="services"><h2>Growth activities</h2><p class="muted">Complete creator-learning tasks to earn points.</p>
+    <div class="service"><div><b>Improve your Instagram bio</b><small>Plan a clear bio for your niche.</small></div><button class="btn" onclick="completeTask('bio',20,this)">+20 pts</button></div>
+    <div class="service"><div><b>Plan your next post</b><small>Write one useful or creative post idea.</small></div><button class="btn" onclick="completeTask('post',20,this)">+20 pts</button></div>
+    <div class="service"><div><b>Account safety check</b><small>Review privacy and security settings.</small></div><button class="btn" onclick="completeTask('safe',30,this)">+30 pts</button></div>
+   </section>
+   <section class="card" id="rewards"><h2>Daily rewards</h2><p class="muted">Claim a daily check-in reward in this demo.</p><div class="service"><div><b>Daily check-in</b><small>Once per browser session.</small></div><button class="btn" id="dailyBtn" onclick="dailyBonus()">Claim +10</button></div><div class="notice">Points are demo-only and cannot be exchanged for followers, likes, or automated engagement.</div></section>
+   <section class="card" id="redeem" style="margin-top:15px">
+    <h2>Redeem followers</h2>
+    <p class="muted">Enter your public Instagram username to submit a demo redemption request.</p>
+    <label for="redeemUsername">Instagram username</label>
+    <input id="redeemUsername" maxlength="30" placeholder="Enter Instagram username (without @)">
+    <button class="btn" onclick="redeemRequest()">Redeem</button>
+    <p class="muted" id="redeemMessage" aria-live="polite"></p>
+   </section>
+   <section class="card" id="referrals"><h2>Invite friends</h2><p class="muted">Share your referral code. Referral tracking is not connected in this prototype.</p><input id="refInput" readonly><button class="btn secondary" onclick="copyCode()">Copy referral code</button><p class="muted" id="copyMsg"></p></section>
+   <section class="card" id="leaderboard"><h2>Leaderboard</h2><div class="service"><b>1. CreatorNova</b><span class="pill">820 pts</span></div><div class="service"><b>2. PixelVibe</b><span class="pill">640 pts</span></div><div class="service"><b id="leaderName">3. You</b><span class="pill" id="leaderPoints">0 pts</span></div></section>
+  </div>
+  <section class="card" id="admin" style="margin-top:15px"><h2>Admin panel preview</h2><p class="muted">Admin management is a visual preview only. Real admin permissions, user management, and reward controls require a secure server.</p><span class="pill">Demo users: 3</span> <span class="pill">Tasks: 3</span> <span class="pill">Rewards: points only</span></section>
+  <div class="notice"><b>Prototype limitations:</b> Accounts and demo points are stored in this browser only. This is not production-grade authentication; client-side storage can be inspected or changed. A public launch needs a backend, securely hashed passwords, rate limiting, account recovery, and server-side admin roles. This site does not connect to Instagram or deliver followers.</div>
+  <div class="foot">SAAV4N FOLLOW · Independent creator-growth demo</div>
+ </main>
+</div>
+<script>
+const KEY='saav4n_demo_users_v2';
+let current='',points=0,completed=new Set(),dailyClaimed=false;
+function users(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
+function saveUsers(v){localStorage.setItem(KEY,JSON.stringify(v))}
+async function hash(s){const data=new TextEncoder().encode(s);const digest=await crypto.subtle.digest('SHA-256',data);return Array.from(new Uint8Array(digest)).map(x=>x.toString(16).padStart(2,'0')).join('')}
+function showRegister(){document.getElementById('loginForm').classList.add('hidden');document.getElementById('registerForm').classList.remove('hidden')}
+function showLogin(){document.getElementById('registerForm').classList.add('hidden');document.getElementById('loginForm').classList.remove('hidden')}
+async function register(){
+ const u=document.getElementById('regUser').value.trim().toLowerCase(),p=document.getElementById('regPass').value,c=document.getElementById('regConfirm').value,e=document.getElementById('regError');
+ if(!/^[a-z0-9._]{3,20}$/.test(u)){e.textContent='Username must be 3–20 characters (letters, numbers, dot, underscore).';return}
+ if(p.length<8){e.textContent='Password must be at least 8 characters.';return}
+ if(p!==c){e.textContent='Passwords do not match.';return}
+ const all=users();if(all[u]){e.textContent='That username is already registered.';return}
+ all[u]={passwordHash:await hash(p)};saveUsers(all);e.textContent='Account created. You can now log in.';showLogin();document.getElementById('loginUser').value=u;
+}
+async function login(){
+ const u=document.getElementById('loginUser').value.trim().toLowerCase(),p=document.getElementById('loginPass').value,e=document.getElementById('loginError'),all=users();
+ if(!all[u]||all[u].passwordHash!==await hash(p)){e.textContent='Incorrect username or password.';return}
+ current=u;points=0;completed=new Set();dailyClaimed=false;
+ document.getElementById('authView').classList.add('hidden');document.getElementById('appView').classList.remove('hidden');
+ document.getElementById('navUser').textContent='@'+u;document.getElementById('helloUser').textContent='@'+u;
+ const code='SAAV-'+u.replace(/[^a-z0-9]/g,'').slice(0,8).toUpperCase();document.getElementById('refCode').textContent=code;document.getElementById('refInput').value=code;
+ refresh();
+}
+function logout(){current='';document.getElementById('appView').classList.add('hidden');document.getElementById('authView').classList.remove('hidden');document.getElementById('loginPass').value='';}
+function refresh(){document.getElementById('points').textContent=points;document.getElementById('done').textContent=completed.size;document.getElementById('leaderPoints').textContent=points+' pts';document.getElementById('leaderName').textContent='3. @'+current;}
+function completeTask(id,n,b){if(completed.has(id))return;completed.add(id);points+=n;b.textContent='Completed ✓';b.disabled=true;b.classList.add('secondary');refresh()}
+function dailyBonus(){if(dailyClaimed)return;dailyClaimed=true;points+=10;const b=document.getElementById('dailyBtn');b.textContent='Claimed ✓';b.disabled=true;refresh()}
+function redeemRequest(){
+ const field=document.getElementById('redeemUsername');
+ const message=document.getElementById('redeemMessage');
+ const name=field.value.trim().replace(/^@/,'');
+ if(!/^[a-zA-Z0-9._]{1,30}$/.test(name)){
+  message.textContent='Please enter a valid Instagram username.';
+  message.style.color='#ff8baf';
+  return;
+ }
+ message.textContent='Demo redemption request submitted successfully for @'+name+'. No followers are sent by this prototype.';
+ message.style.color='#5bd6a0';
+}
+async function copyCode(){const i=document.getElementById('refInput');try{await navigator.clipboard.writeText(i.value);document.getElementById('copyMsg').textContent='Copied!'}catch(e){i.select();document.execCommand('copy');document.getElementById('copyMsg').textContent='Code selected to copy.'}}
+</script></body></html>
